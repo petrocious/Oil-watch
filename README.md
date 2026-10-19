@@ -31,16 +31,16 @@ The application is designed to be **container-first** and **Kubernetes-native**,
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| 🔍 **Real-Time Quotes** | Fetch live stock prices via Yahoo Finance API |
-| 📅 **Historical Charts** | Interactive Chart.js graphs for 30-day price history |
-| ⚡ **Redis Caching** | 5-minute TTL cache to reduce external API calls |
-| 🗄️ **MySQL Persistence** | Logs all queries, price snapshots, and system metrics |
-| 🔎 **Stock Search** | Symbol/name lookup with instant feedback |
-| 🩺 **Health Endpoints** | `/health`, `/ready`, `/startup` for Kubernetes probes |
-| 📊 **Prometheus Metrics** | `/metrics` endpoint for scraping by Prometheus |
-| 🐳 **Docker Ready** | Multi-stage, non-root, minimal image |
+| Feature                     | Description                                                |
+| --------------------------- | ---------------------------------------------------------- |
+| 🔍 **Real-Time Quotes**     | Fetch live stock prices via Yahoo Finance API              |
+| 📅 **Historical Charts**    | Interactive Chart.js graphs for 30-day price history       |
+| ⚡ **Redis Caching**         | 5-minute TTL cache to reduce external API calls            |
+| 🗄️ **MySQL Persistence**   | Logs all queries, price snapshots, and system metrics      |
+| 🔎 **Stock Search**         | Symbol/name lookup with instant feedback                   |
+| 🩺 **Health Endpoints**     | `/health`, `/ready`, `/startup` for Kubernetes probes      |
+| 📊 **Prometheus Metrics**   | `/metrics` endpoint for scraping by Prometheus             |
+| 🐳 **Docker Ready**         | Multi-stage, non-root, minimal image                       |
 | ☸️ **Kubernetes Manifests** | Full set of production manifests (HPA, PDB, NetworkPolicy) |
 
 ---
