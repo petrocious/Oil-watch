@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OILWATCH — US Heating Oil · Diesel · Gasoline</title>
+<meta name="description" content="Live US heating oil, diesel and gasoline prices. 100-gallon tank forecast. Know when to buy." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════ TOP STATUS BAR ══════════ -->
+<header class="topbar">
+  <div class="brand">
+    <span class="pulse"></span>
+    <span class="brand-name">OILWATCH</span>
+    <span class="brand-sub">US heating oil · diesel · gasoline — live</span>
+  </div>
+  <div class="ticker">
+    <div class="tick"><span class="lbl">HO</span><span class="val" id="tick-ho">—</span></div>
+    <div class="tick"><span class="lbl">ULSD</span><span class="val" id="tick-ulsd">—</span></div>
+    <div class="tick"><span class="lbl">RBOB</span><span class="val" id="tick-rbob">—</span></div>
+    <div class="tick"><span class="lbl">WTI</span><span class="val" id="tick-wti">—</span></div>
+    <div class="tick updated">updated <span id="tick-time">—</span></div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero">
+    <div class="hero-card" data-accent="amber">
+      <div class="hero-label">Heating oil — spot price</div>
+      <div class="hero-value"><span id="ho-price" class="num">0.000</span><span class="unit">$/gal</span></div>
+      <div class="hero-delta" id="ho-delta">—</div>
+      <div class="hero-note">NY Harbor · No. 2 Heating Oil · USD per gallon</div>
+      <div class="glow"></div>
+    </div>
+
+    <div class="hero-card" data-accent="blue">
+      <div class="hero-label">Your 100-gal tank</div>
+      <div class="hero-value"><span id="tank-days" class="num">—</span><span class="unit">days left</span></div>
+      <div class="hero-delta" id="tank-status">calculating…</div>
+      <div class="hero-note">based on your current burn rate</div>
+      <div class="glow"></div>
+    </div>
+
+    <div class="hero-card" data-accent="green" id="buy-signal">
+      <div class="hero-label">Buy signal</div>
+      <div class="hero-value"><span id="signal-text">HOLD</span></div>
+      <div class="hero-delta" id="signal-reason">waiting for data…</div>
+      <div class="hero-note">30-day low / trend / tank level</div>
+      <div class="glow"></div>
+    </div>
+  </section>
+
+  <!-- ══════════ PRICE CHART ══════════ -->
+  <section class="panel reveal">
+    <div class="panel-head">
+      <h2>30-day price history</h2>
+      <div class="legend">
+        <button class="lg active" data-series="ho">Heating Oil</button>
+        <button class="lg" data-series="ulsd">Diesel</button>
+        <button class="lg" data-series="rbob">Gasoline</button>
+        <button class="lg" data-series="wti">WTI Crude</button>
+      </div>
+    </div>
+    <canvas id="priceChart" height="280"></canvas>
+    <div class="chart-foot" id="chart-foot">—</div>
+  </section>
+
+  <!-- ══════════ TANK GAUGE + INPUTS ══════════ -->
+  <section class="grid-2">
+    <div class="panel reveal">
+      <div class="panel-head"><h2>Tank depletion forecast</h2></div>
+      <canvas id="tankChart" height="240"></canvas>
+      <div class="chart-foot" id="tank-foot">Tank empties on —</div>
+    </div>
+
+    <div class="panel reveal">
+      <div class="panel-head"><h2>Your inputs</h2></div>
+      <div class="inputs">
+        <label>Burn rate <output id="out-burn">2.5</output> gal/day
+          <input type="range" id="in-burn" min="0.5" max="10" step="0.1" value="2.5">
+        </label>
+        <label>Current tank level <output id="out-level">75</output> gal
+          <input type="range" id="in-level" min="0" max="100" step="1" value="75">
+        </label>
+        <label>Tank capacity <output id="out-cap">100</output> gal
+          <input type="range" id="in-cap" min="50" max="500" step="10" value="100">
+        </label>
+        <label>Outdoor temp <output id="out-temp">35</output> °F
+          <input type="range" id="in-temp" min="0" max="70" step="1" value="35">
+        </label>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ 28-DAY MATRIX ══════════ -->
+  <section class="panel reveal">
+    <div class="panel-head">
+      <h2>When should you buy?</h2>
+      <div class="legend-legend">
+        <span class="badge best">cheap</span>
+        <span class="badge ok">average</span>
+        <span class="badge bad">expensive</span>
+      </div>
+    </div>
+    <div class="matrix" id="matrix"></div>
+    <div class="chart-foot">Forecast band from the last 30 days of heating-oil volatility · refresh to update</div>
+  </section>
+
+  <!-- ══════════ COMPARISON ══════════ -->
+  <section class="panel reveal">
+    <div class="panel-head"><h2>Fuel price comparison</h2></div>
+    <div class="compare" id="compare"></div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div>Data: <b>EIA</b> · <b>NYMEX</b> · cached locally · demo values when API offline</div>
+  <div>© OILWATCH · v1.0 · vanilla JS · no trackers</div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

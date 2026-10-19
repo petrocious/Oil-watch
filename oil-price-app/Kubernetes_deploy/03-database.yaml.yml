@@ -1,0 +1,50 @@
+#PostgreSQL Statefulset
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgresql
+  namespace: oil-price-app
+spec:
+  serviceName: "postgresql"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-db
+  template:
+    metadata:
+      labels:
+        app: postgres-db
+    spec:
+      containers:
+      - name: postgresql
+        image: postgres:15
+        ports:  
+        - containerPort: 5432
+        envFrom:
+        - SecretRef:
+            name: db-credentials
+          volumeMounts:
+        - name: pgdata
+          mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+  - metadata:
+      name: pgdata
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 5Gi
+
+---
+#Headless Service for PostgreSQL StatefulSet
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgresql
+  namespace: oil-price-app  
+spec:
+  clusterIP: None
+  selector:
+    app: postgres-db
+  ports:
+  - port: 5432
